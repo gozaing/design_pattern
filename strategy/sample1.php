@@ -83,20 +83,20 @@ class ConcretePushNotificationMessage extends MessageStrategy {
 // 送信対象のテストUserインスタンス
 $user = new User('Pさん', 'test@example.com', '090xxxxyyyy');
 
-// Mailが送信される
+// Mail送信
 $strategy = new ConcreteMailMessage($user);
 
 // $strategyにどのクラスを代入するかでMail / SMS / PushNotification とsend()の振る舞いを変える
-// SMSが送信される
+// SMS送信
 // $strategy = new ConcreteSMSMessage($user);
 
-// Push通知が送信される
+// Push通知
 // $strategy = new ConcretePushNotificationMessage($user);
 
 // Contextクラスにstrategyクラスを注入
 $contextMessage = new MessageContext($strategy);
 
-// 注入されたオブジェクトのsend()メソッドをcallする
+// 送信処理 注入されたオブジェクトのsend()メソッドをcall
 $contextMessage->send();
 
 // mail->to(Pさん) と出力される
