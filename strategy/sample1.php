@@ -133,4 +133,8 @@ $contextMessage = new MessageContext($strategy);
 // 送信処理 注入されたオブジェクトのsend()メソッドをcall
 $contextMessage->send();
 
+// コンテキストクラスを利用しなくてもsend()する事は出来るが。
+// インスタンスがsend()メソッドを持っている保証はない。クラス内を見るまで判断出来ない
+$strategy->send();
+
 // mail->to(Pさん) と出力される
