@@ -1,36 +1,57 @@
 <?php
 
-// 送信対象のUserクラス
+/**
+ * 送信対象のUserクラス
+ */
 class User {
     private $name;
     private $mail;
     private $tel;
 
-    // 仮に利用するpropertyを定義
+    /**
+     * 仮に利用するpropertyを定義
+     * User constructor.
+     * @param $name
+     * @param $mail
+     * @param $tel
+     */
     public function __construct($name, $mail, $tel) {
         $this->name = $name;
         $this->mail = $mail;
         $this->tel  = $tel;
     }
 
-    // 仮に名前だけ出力するためにgetter設置
+    /**
+     * 仮に名前だけ出力するためにgetter設置
+     * @return mixed
+     */
     public function getName() {
         return $this->name;
     }
 
 }
 
-// 抽象クラス
+/**
+ * 抽象クラス
+ * Class MessageStrategy
+ */
 abstract class MessageStrategy {
     protected $user;
     public abstract function send();
     public abstract function __construct(User $user);
 }
 
-// コンテキストクラス
+/**
+ * コンテキストクラス
+ * Class MessageContext
+ */
 class MessageContext {
     private $strategy;
 
+    /**
+     * MessageContext constructor.
+     * @param MessageStrategy $message
+     */
     public function __construct(MessageStrategy $message) {
         $this->strategy = $message;
 
@@ -41,7 +62,10 @@ class MessageContext {
     }
 }
 
-// 具象クラス(Mail)
+/**
+ * 具象クラス(Mail)
+ * Class ConcreteMailMessage
+ */
 class ConcreteMailMessage extends MessageStrategy {
     public function __construct(User $user) {
         $this->user = $user;
@@ -54,7 +78,10 @@ class ConcreteMailMessage extends MessageStrategy {
     }
 }
 
-// 具象クラス(SMS)
+/**
+ * 具象クラス(SMS)
+ * Class ConcreteSMSMessage
+ */
 class ConcreteSMSMessage extends MessageStrategy {
     public function __construct(User $user) {
         $this->user = $user;
@@ -67,7 +94,10 @@ class ConcreteSMSMessage extends MessageStrategy {
     }
 }
 
-// 具象クラス(PushNotification)
+/**
+ * 具象クラス(PushNotification)
+ * Class ConcretePushNotificationMessage
+ */
 class ConcretePushNotificationMessage extends MessageStrategy {
     public function __construct(User $user) {
         $this->user = $user;
@@ -79,6 +109,10 @@ class ConcretePushNotificationMessage extends MessageStrategy {
         echo 'push->to('.$this->user->getName(). ')'. PHP_EOL;
     }
 }
+
+// ------------------------------
+// 実際に利用するイメージです
+// ------------------------------
 
 // 送信対象のテストUserインスタンス
 $user = new User('Pさん', 'test@example.com', '090xxxxyyyy');
